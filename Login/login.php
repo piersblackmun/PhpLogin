@@ -15,6 +15,7 @@ if (isset($_POST['uname']) && isset ($_POST['password'])) {
     $uname = validate ($_POST['uname']);
     $pass = validate ($_POST['password']);
     
+    
     if (empty($uname)){
         header ("Location: index.php?error=User Name is required");
         exit();
@@ -22,6 +23,10 @@ if (isset($_POST['uname']) && isset ($_POST['password'])) {
         header ("Location: index.php?error=Password is required");
         exit();
     } else {
+        
+        // hashed password
+        $pass = md5($pass);
+        
         $sql = "SELECT * FROM users WHERE user_name='$uname' AND password='$pass'";
         $conn = mysqli_connect("localhost", "root", "", "test_db");                     // $conn not connecting with 'include "db_conn.php"'.
         $result = mysqli_query($conn, $sql);
